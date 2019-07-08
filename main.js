@@ -30,5 +30,5 @@ function reset(){
   let newDiv = document.createElement('div');
   newDiv.id = 'container';
   bodyArr[0].appendChild(newDiv);
-
 }
+//TODO: Add input field 
