@@ -1,0 +1,9 @@
+#container{
+    border: 2px solid red;
+    width: fit-content;
+    min-width: 50px;
+}
+.text-class {
+    color: aqua;
+    text-align: center;
+}
