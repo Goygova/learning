@@ -1,34 +1,32 @@
-function renderReset() {
-    let container = document.getElementById('container');
-    let newDiv = createElement('div', 'text-class', 'Hello');
-    let existingDivs = container.getElementsByClassName('text-class');
-    if(existingDivs.length > 0){
-      reset();
-      renameButton('render-reset-button','Render');
-    } else {
-      renameButton('render-reset-button','Reset');
-      container.appendChild(newDiv);
+let fieldsCounter = 0;
+function addField(){
+  let fieldName = prompt('Enter field name:');
+    if(fieldName){
+      let inputEl = document.createElement('input');
+      let div = document.createElement('div');
+      div.innerHTML = fieldName + ':';
+      div.appendChild(inputEl);
+      let container = document.getElementById('container');
+      let submitButton = document.getElementById('submit-button');
+      if(submitButton){
+        container.insertBefore(div, submitButton);
+      } else {
+        container.appendChild(div);
+      }
+      fieldsCounter++;
+  }
+  if(fieldsCounter > 0){
+    if(!document.getElementById('submit-button')){
+      renderSubmitButton();
     }
+  }
 }
 
-function renameButton(id,name){
-  let button = document.getElementById(id);
-  button.innerHTML = name;
+function renderSubmitButton(){
+  let submitButton = document.createElement('button');
+  submitButton.innerHTML = 'Submit';
+  submitButton.id = 'submit-button';
+  let container = document.getElementById('container');
+  container.appendChild(submitButton);
 }
-
-function createElement(tagName, className, text){
-  let newEl = document.createElement(tagName);
-  newEl.className = className;
-  newEl.innerHTML = text;
-  return newEl;
-}
-
-function reset(){
-  let oldDiv = document.getElementById('container')
-  let bodyArr = document.getElementsByTagName('body');
-  bodyArr[0].removeChild(oldDiv);
-  let newDiv = document.createElement('div');
-  newDiv.id = 'container';
-  bodyArr[0].appendChild(newDiv);
-}
-//TODO: Add input field 
+//TODO: add remove field button

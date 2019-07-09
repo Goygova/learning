@@ -1,3 +1,11 @@
+.title{
+    color: red;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+
+
+
 #container{
     border: 2px solid red;
     width: fit-content;
@@ -6,4 +14,5 @@
 .text-class {
     color: aqua;
     text-align: center;
+
 }
