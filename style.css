@@ -4,15 +4,23 @@
     text-align: center;
 }
 
-
-
 #container{
-    border: 2px solid red;
     width: fit-content;
     min-width: 50px;
+    margin: auto;
 }
-.text-class {
-    color: aqua;
-    text-align: center;
 
+.field-name-container{
+    width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.field-container{
+    display: flex;
+}
+
+#submit-button{
+    margin-top: 12px;
+    float: right;
 }
