@@ -1,4 +1,6 @@
 let fieldsCounter = 0;
+const MAX_NUMBER_OF_FIELDS = 3;
+
 function addField(){
   let fieldName = prompt('Enter field name:');
     if(fieldName){
@@ -7,13 +9,9 @@ function addField(){
       let fieldContainer = document.createElement('div');
       fieldContainer.className = 'field-container';
 
-      let removeButton = document.createElement('button');
-      removeButton.innerHTML = 'Remove field';
-      removeButton.onclick = removeField;
+      let removeButton = createRemoveButton();
 
-      let fieldNameContainer = document.createElement('div');
-      fieldNameContainer.className = 'field-name-container';
-      fieldNameContainer.innerHTML = fieldName + ':';
+      let fieldNameContainer = createFieldNameContainer(fieldName);
 
       fieldContainer.appendChild(fieldNameContainer);
       fieldContainer.appendChild(inputEl);
@@ -29,31 +27,72 @@ function addField(){
         container.appendChild(fieldContainer);
       }
       fieldsCounter++;
+
+      if(shouldDisableAddFieldButton()){
+        let addFieldButton = document.getElementById('add-field-button');
+        addFieldButton.disabled = true;
+        let tooltip = createTooltip();
+        addFieldButton.appendChild(tooltip);
+      }
   }
   if(fieldsCounter > 0){
     if(!document.getElementById('submit-button')){
-      renderSubmitButton();
+      let submitButton = createSubmitButton();
+      let container = document.getElementById('container');
+      container.appendChild(submitButton);
     }
   }
 }
 
-function renderSubmitButton(){
+function createSubmitButton(){
   let submitButton = document.createElement('button');
   submitButton.innerHTML = 'Submit';
   submitButton.id = 'submit-button';
-  let container = document.getElementById('container');
-  container.appendChild(submitButton);
+  return submitButton;
+}
+
+function removeSubmitButton(){
+  let submitButtonParent = document.getElementById('container');
+  let submitButton = document.getElementById('submit-button');
+  submitButtonParent.removeChild(submitButton);
+}
+
+function createRemoveButton(){
+  let removeButton = document.createElement('button');
+  removeButton.innerHTML = 'Remove field';
+  removeButton.onclick = removeField;
+  return removeButton;
+}
+
+function createFieldNameContainer(fieldName){
+  let fieldNameContainer = document.createElement('div');
+  fieldNameContainer.className = 'field-name-container';
+  fieldNameContainer.innerHTML = fieldName + ':';
+  return fieldNameContainer;
 }
 
 function removeField(){
   this.parentElement.parentElement.removeChild(this.parentElement);
   fieldsCounter--;
+
+  if(!shouldDisableAddFieldButton()){
+    let addFieldButton = document.getElementById('add-field-button');
+    addFieldButton.disabled = false;
+  }
+
   //if last field is removed then remove submit button
   if(fieldsCounter === 0){
-    let submitButtonParent = document.getElementById('container');
-    let submitButton = document.getElementById('submit-button');
-    submitButtonParent.removeChild(submitButton);
+    removeSubmitButton();
   }
 }
 
+function shouldDisableAddFieldButton(){
+  return fieldsCounter === MAX_NUMBER_OF_FIELDS;
+}
 
+function createTooltip(){
+  let tooltip = document.createElement('span');
+  tooltip.className = 'tooltiptext';
+  tooltip.innerHTML = `No more than ${MAX_NUMBER_OF_FIELDS} fields can be added`;
+  return tooltip;
+}
