@@ -3,37 +3,40 @@ const MAX_NUMBER_OF_FIELDS = 3;
 
 function addField(){
   let fieldName = prompt('Enter field name:');
-    if(fieldName){
-      let inputEl = document.createElement('input');
+  if(doesFieldExist(fieldName)){
+    return;
+  }
+  if(fieldName){
+    let inputEl = document.createElement('input');
 
-      let fieldContainer = document.createElement('div');
-      fieldContainer.className = 'field-container';
+    let fieldContainer = document.createElement('div');
+    fieldContainer.className = 'field-container';
 
-      let removeButton = createRemoveButton();
+    let removeButton = createRemoveButton();
 
-      let fieldNameContainer = createFieldNameContainer(fieldName);
+    let fieldNameContainer = createFieldNameContainer(fieldName);
 
-      fieldContainer.appendChild(fieldNameContainer);
-      fieldContainer.appendChild(inputEl);
-      fieldContainer.appendChild(removeButton);
+    fieldContainer.appendChild(fieldNameContainer);
+    fieldContainer.appendChild(inputEl);
+    fieldContainer.appendChild(removeButton);
 
-      let container = document.getElementById('container');
+    let container = document.getElementById('container');
 
-      let submitButton = document.getElementById('submit-button');
+    let submitButton = document.getElementById('submit-button');
 
-      if(submitButton){
-        container.insertBefore(fieldContainer, submitButton);
-      } else {
-        container.appendChild(fieldContainer);
-      }
-      fieldsCounter++;
+    if(submitButton){
+      container.insertBefore(fieldContainer, submitButton);
+    } else {
+      container.appendChild(fieldContainer);
+    }
+    fieldsCounter++;
 
-      if(shouldDisableAddFieldButton()){
-        let addFieldButton = document.getElementById('add-field-button');
-        addFieldButton.disabled = true;
-        let tooltip = createTooltip();
-        addFieldButton.appendChild(tooltip);
-      }
+    if(shouldDisableAddFieldButton()){
+      let addFieldButton = document.getElementById('add-field-button');
+      addFieldButton.disabled = true;
+      let tooltip = createTooltip();
+      addFieldButton.appendChild(tooltip);
+    }
   }
   if(fieldsCounter > 0){
     if(!document.getElementById('submit-button')){
@@ -96,3 +99,16 @@ function createTooltip(){
   tooltip.innerHTML = `No more than ${MAX_NUMBER_OF_FIELDS} fields can be added`;
   return tooltip;
 }
+
+function doesFieldExist(fieldName){
+  let allFieldNames = document.getElementsByClassName('field-name-container');
+  for(let i = 0; i < allFieldNames.length; i++){
+    let existingFieldName = allFieldNames[i].innerHTML;
+    if(fieldName === existingFieldName.slice(0, existingFieldName.length - 1)){
+      return true;
+    }
+  }
+  return false;
+}
+//TODO disable submit button until all fields are filled out.
+//creat card after submit.

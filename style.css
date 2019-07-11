@@ -18,6 +18,7 @@
 
 .field-container{
     display: flex;
+    padding: 5px;
 }
 
 #submit-button{
