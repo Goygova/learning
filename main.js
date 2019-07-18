@@ -7,8 +7,10 @@ function addField(){
   if(doesFieldExist(fieldName)){
     return;
   }
+
   if(fieldName){
     let inputEl = document.createElement('input');
+    inputEl.className = 'input-field';
 
     let fieldContainer = document.createElement('div');
     fieldContainer.className = 'field-container';
@@ -24,6 +26,7 @@ function addField(){
     let container = document.getElementById('container');
 
     let submitButton = document.getElementById('submit-button');
+
 
     /* if submit button exists then add field before button 
     otherwise add field at the end
@@ -52,12 +55,14 @@ function addField(){
       container.appendChild(submitButton);
     }
   }
-}
+} 
+
 /* creating submit button function*/
 function createSubmitButton(){
   let submitButton = document.createElement('button');
   submitButton.innerHTML = 'Submit';
   submitButton.id = 'submit-button';
+  submitButton.onclick = submit;
   return submitButton;
 }
 /* function that removes submit button */
@@ -121,5 +126,25 @@ function doesFieldExist(fieldName){
   }
   return false;
 }
-//TODO disable submit button until all fields are filled out.
-//creat card after submit.
+
+//function that checks if all fields are fiiled out
+function verifyFields(){
+  let fieldTexts = document.getElementsByClassName('input-field');
+  let hasAllvalues = true;
+  for(let i = 0; i < fieldTexts.length; i++){
+    if(!fieldTexts[i].value){
+      hasAllvalues = false;
+    }
+  }
+  return hasAllvalues;
+}
+
+//function submit or alert on click
+function submit(){
+  if(verifyFields()){
+    alert("Submitted");
+  } else {
+    alert("Please fill out all fields!!");
+  }
+}
+//TODO create form after submitting
